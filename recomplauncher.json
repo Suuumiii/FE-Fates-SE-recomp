@@ -1,0 +1,135 @@
+{
+  "$schema": "https://recomplauncher.com/schema/recomplauncher.json",
+  "format": 1,
+  "name": "Fire Emblem Fates: Special Edition Recomp",
+  "repo": "Suuumiii/FE-Fates-SE-recomp",
+  "min": "0.90.0-beta.27",
+  "requires": [
+    "settings.json",
+    "settings.choices"
+  ],
+  "game": {
+    "kind": "iso",
+    "label": "Your decrypted European Fire Emblem Fates: Special Edition image (.3ds, .cci or .cxi)."
+  },
+  "start": {
+    "program": [
+      "Fates Launcher.exe"
+    ]
+  },
+  "config": [
+    {
+      "id": "main",
+      "format": "json",
+      "file": [
+        {
+          "path": "{install}/launcher-settings.json"
+        }
+      ],
+      "game_path": "Game",
+      "new": {
+        "Recompiled": "{local}/FE-Fates-SE-Recomp/code",
+        "Renderer": "Vulkan",
+        "Rasterizer": "Hardware",
+        "Layout": "top_only"
+      }
+    }
+  ],
+  "settings": [
+    {
+      "id": "renderer",
+      "label": "Renderer",
+      "help": "Graphics backend Zakuro uses to draw the game.",
+      "choices": [
+        {
+          "label": "Vulkan",
+          "set": {
+            "Renderer": "Vulkan"
+          }
+        },
+        {
+          "label": "OpenGL",
+          "set": {
+            "Renderer": "GL"
+          }
+        },
+        {
+          "label": "Software",
+          "set": {
+            "Renderer": "Software"
+          }
+        }
+      ],
+      "defaults": {
+        "Renderer": "Vulkan"
+      }
+    },
+    {
+      "id": "rasterizer",
+      "label": "3D rasterizer",
+      "help": "Hardware uses your GPU; software can help with graphics compatibility.",
+      "choices": [
+        {
+          "label": "Hardware",
+          "set": {
+            "Rasterizer": "Hardware"
+          }
+        },
+        {
+          "label": "Software",
+          "set": {
+            "Rasterizer": "Software"
+          }
+        }
+      ],
+      "defaults": {
+        "Rasterizer": "Hardware"
+      }
+    },
+    {
+      "id": "layout",
+      "label": "Screen layout",
+      "help": "Choose how the 3DS top and bottom screens are arranged.",
+      "choices": [
+        {
+          "label": "Top screen only",
+          "set": {
+            "Layout": "top_only"
+          }
+        },
+        {
+          "label": "Bottom screen only",
+          "set": {
+            "Layout": "bottom_only"
+          }
+        },
+        {
+          "label": "Top over bottom",
+          "set": {
+            "Layout": "stacked"
+          }
+        },
+        {
+          "label": "Screens side by side",
+          "set": {
+            "Layout": "side_by_side"
+          }
+        },
+        {
+          "label": "Big top, small bottom",
+          "set": {
+            "Layout": "large_top"
+          }
+        }
+      ],
+      "defaults": {
+        "Layout": "top_only"
+      }
+    }
+  ],
+  "saves": [
+    "{config}/zakuro/user",
+    "{config}/zakuro/states",
+    "{config}/zakuro/settings.toml"
+  ]
+}
