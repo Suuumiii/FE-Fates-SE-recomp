@@ -1,4 +1,4 @@
-﻿# Fire Emblem Fates: Special Edition Recomp Launcher
+# Fire Emblem Fates: Special Edition Recomp Launcher
 
 Windows launcher source for configuring and launching the Zakuro recompilation, with configurable keyboard/controller bindings and mod management.
 
@@ -12,12 +12,13 @@ dotnet publish .\launcher-src\FatesLauncher.csproj -c Release -r win-x64 --self-
 
 ## Local game and tool files
 
-This repository intentionally does not contain a game dump, game metadata, generated recompiled code, or bundled tool binaries. Use a legally obtained, decrypted game image and choose its location and an output folder in the launcher.
+This repository intentionally does not contain a game dump, game metadata, generated recompiled code, or bundled tool binaries. Use your own decrypted game image and choose its location and an output folder in the launcher.
 
-For build and launch features, place compatible tools beside the launcher in these paths:
+Place compatible runtime tools beside the launcher:
 
 - `tools\3dsrecomp\3dsrecomp.exe`
-- `tools\mingw64\bin\gcc.exe` (with its required runtime files)
 - `tools\zakuro\zakuro.exe`
 
-The generated recompiled code belongs in the output folder selected in the launcher and should remain local.
+The launcher downloads Zig 0.17.1 from ziglang.org on the first build, verifies its published SHA-256 checksum, and caches it under `%LOCALAPPDATA%\FE-Fates-SE-Recomp\compiler`. Internet access is required for that one-time compiler setup. An installed GCC on the system PATH is also detected and can be used instead.
+
+Generated recompiled code belongs in the output folder selected in the launcher and should remain local.

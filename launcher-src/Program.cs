@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using System.IO.Compression;
 using SharpCompress.Archives;
 
 namespace FatesLauncher;
@@ -38,6 +39,11 @@ internal sealed class LauncherSettings
 internal sealed class LauncherForm : Form
 {
     private static readonly HttpClient ModHttp = new(new HttpClientHandler { AllowAutoRedirect = true }) { Timeout = Timeout.InfiniteTimeSpan };
+    private const string ZigVersion = "0.17.1";
+    private const string ZigDownloadUrl = "https://ziglang.org/download/0.17.1/zig-x86_64-windows-0.17.1.zip";
+    private const string ZigSha256 = "b03f477a1943673e02aca0f570e8030dffd536ce1f45cbc4d3326ec31159562e";
+    private static readonly string ZigRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FE-Fates-SE-Recomp", "compiler");
+    private sealed record CCompiler(string Command, string Directory);
     private readonly string _settingsPath = Path.Combine(AppContext.BaseDirectory, "launcher-settings.json");
     private readonly TextBox _game = PathBox();
     private readonly TextBox _recompiled = PathBox();
@@ -975,7 +981,6 @@ internal sealed class LauncherForm : Form
     {
         if (_building) return;
         var recompiler = ToolPath("3dsrecomp", "3dsrecomp.exe");
-        var compiler = ToolPath("mingw64", "bin", "gcc.exe");
         if (!File.Exists(_game.Text))
         {
             MessageBox.Show("Choose a decrypted .3ds/.cci game image first.", "Game image required", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -986,9 +991,11 @@ internal sealed class LauncherForm : Form
             MessageBox.Show($"Bundled 3dsrecomp was not found:\n{recompiler}", "Recompiler missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
-        if (!File.Exists(compiler))
+        if (FindCCompiler() is null && MessageBox.Show(
+                $"The C compiler is downloaded from ziglang.org the first time you build (about 96 MB). It is cached locally for later builds. Download Zig {ZigVersion} now?",
+                "Compiler setup", MessageBoxButtons.YesNo, MessageBoxIcon.Information) != DialogResult.Yes)
         {
-            MessageBox.Show($"Bundled GCC was not found:\n{compiler}", "C compiler missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            _status.Text = "Build cancelled; compiler setup was skipped.";
             return;
         }
 
@@ -998,6 +1005,7 @@ internal sealed class LauncherForm : Form
         _status.Text = "Recompiling the game codeâ€¦ this first build may take several minutes.";
         try
         {
+            var compiler = await EnsureCCompilerAsync();
             Directory.CreateDirectory(_recompiled.Text);
             var info = new ProcessStartInfo(recompiler)
             {
@@ -1008,9 +1016,8 @@ internal sealed class LauncherForm : Form
                 CreateNoWindow = true
             };
             info.ArgumentList.Add("build"); info.ArgumentList.Add(_game.Text); info.ArgumentList.Add(_recompiled.Text);
-            var compilerDirectory = Path.GetDirectoryName(compiler)!;
-            info.Environment["CC"] = compiler;
-            info.Environment["PATH"] = compilerDirectory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH");
+            info.Environment["CC"] = compiler.Command;
+            info.Environment["PATH"] = compiler.Directory + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH");
 
             using var process = new Process { StartInfo = info, EnableRaisingEvents = true };
             process.OutputDataReceived += (_, e) => { if (e.Data is not null) HandleBuildOutput(e.Data); };
@@ -1037,6 +1044,85 @@ internal sealed class LauncherForm : Form
         {
             _building = false; _buildButton.Enabled = true;
         }
+    }
+
+    private static CCompiler? FindCCompiler()
+    {
+        var bundledGcc = ToolPath("mingw64", "bin", "gcc.exe");
+        if (File.Exists(bundledGcc)) return new CCompiler(bundledGcc, Path.GetDirectoryName(bundledGcc)!);
+
+        var systemGcc = Environment.GetEnvironmentVariable("PATH")?
+            .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
+            .Select(directory => Path.Combine(directory.Trim('"'), "gcc.exe"))
+            .FirstOrDefault(File.Exists);
+        if (systemGcc is not null) return new CCompiler(systemGcc, Path.GetDirectoryName(systemGcc)!);
+
+        var zigPath = Path.Combine(ZigRoot, $"zig-x86_64-windows-{ZigVersion}", "zig.exe");
+        return File.Exists(zigPath) ? new CCompiler($"\"{zigPath}\" cc", Path.GetDirectoryName(zigPath)!) : null;
+    }
+
+    private async Task<CCompiler> EnsureCCompilerAsync()
+    {
+        var existing = FindCCompiler();
+        if (existing is not null) return existing;
+
+        Directory.CreateDirectory(ZigRoot);
+        var archivePath = Path.Combine(ZigRoot, $"zig-{ZigVersion}.zip");
+        _progress.Visible = true; _progress.Style = ProgressBarStyle.Marquee;
+        _status.Text = $"Downloading Zig {ZigVersion} compiler from ziglang.org...";
+        using (var response = await ModHttp.GetAsync(ZigDownloadUrl, HttpCompletionOption.ResponseHeadersRead))
+        {
+            response.EnsureSuccessStatusCode();
+            var total = response.Content.Headers.ContentLength ?? 0;
+            await using var input = await response.Content.ReadAsStreamAsync();
+            await using var output = new FileStream(archivePath, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 128, true);
+            var buffer = new byte[1024 * 128];
+            long received = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer)) > 0)
+            {
+                await output.WriteAsync(buffer.AsMemory(0, count));
+                received += count;
+                if (total > 0)
+                {
+                    _progress.Style = ProgressBarStyle.Blocks; _progress.Maximum = 100;
+                    _progress.Value = (int)Math.Clamp(received * 100 / total, 0, 100);
+                    _status.Text = $"Downloading Zig {ZigVersion} compiler... {received / 1048576:N0} / {total / 1048576:N0} MB";
+                }
+            }
+        }
+
+        _status.Text = "Checking compiler download...";
+        await using (var archiveStream = File.OpenRead(archivePath))
+        {
+            var actualHash = Convert.ToHexString(await SHA256.HashDataAsync(archiveStream)).ToLowerInvariant();
+            if (!actualHash.Equals(ZigSha256, StringComparison.Ordinal))
+            {
+                File.Delete(archivePath);
+                throw new InvalidDataException("The Zig download did not match its published SHA-256 checksum.");
+            }
+        }
+
+        var extractionRoot = Path.GetFullPath(ZigRoot) + Path.DirectorySeparatorChar;
+        using (var archive = ZipFile.OpenRead(archivePath))
+        {
+            foreach (var entry in archive.Entries)
+            {
+                var target = Path.GetFullPath(Path.Combine(ZigRoot, entry.FullName));
+                if (!target.StartsWith(extractionRoot, StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidDataException("The Zig archive contains an unsafe file path.");
+                if (entry.FullName.EndsWith('/') || entry.FullName.EndsWith('\\'))
+                {
+                    Directory.CreateDirectory(target);
+                    continue;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+                entry.ExtractToFile(target, true);
+            }
+        }
+        File.Delete(archivePath);
+
+        return FindCCompiler() ?? throw new InvalidDataException("Zig was extracted, but zig.exe was not found.");
     }
 
     private void HandleBuildOutput(string line)
