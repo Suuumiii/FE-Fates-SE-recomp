@@ -70,6 +70,6 @@ The packaging script includes the launcher, required tools, notices, README and 
 
 You need your own dump of the game. The project has no decryption and no keys, and Zakuro refuses a dump that is still encrypted.
 
-The repository and the launcher contain no code, data or assets from the game. What they hold about it, such as addresses in its code and the names of its files, is listed in [LEGAL.md](LEGAL.md). What the launcher builds is made from your copy and stays on your computer: the converted code in `%APPDATA%\3dsrecomp` and the mods in `%APPDATA%\zakuro\mods` on Windows, or `~/.local/share/3dsrecomp` and `~/.local/share/zakuro/mods` on Linux. Don't share either.
+The repository and the launcher contain no code, data or assets from the game.[LEGAL.md](LEGAL.md). What the launcher builds is made from your copy and stays on your computer.
 
 The project's own files are under the MIT license ([LICENSE](LICENSE)). Zakuro and 3dsrecomp keep their own licenses ([THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)). Fire Emblem is a trademark of Nintendo. This project is not affiliated with Nintendo or Intelligent Systems.
