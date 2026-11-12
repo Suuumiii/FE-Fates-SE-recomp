@@ -1,0 +1,19 @@
+﻿# Build output and local launcher state
+launcher-build/
+launcher-src/bin/
+launcher-src/obj/
+launcher-settings.json
+launcher-error.log
+
+# User supplied game images, metadata, and generated game files
+*.3ds
+*.cci
+*.cxi
+metadata.json
+fates-recomp-code/
+**/fates-recomp-code/
+Fire Emblem Fates - Special Edition/
+game/
+
+# Large or separately obtained runtime tool bundles
+/tools/

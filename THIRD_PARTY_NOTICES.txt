@@ -1,0 +1,1 @@
+This launcher bundles SharpCompress 0.50.8 (MIT License), Copyright Adam Hathcock and contributors. Source and license: https://github.com/adamhathcock/sharpcompress
