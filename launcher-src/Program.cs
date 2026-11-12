@@ -96,7 +96,7 @@ internal sealed class LauncherForm : Form
         "Fire Emblem Fates Texture Compilation 6.7", "fire_emblem_fates_texture_compilation_67.rar",
         "https://gamebanana.com/dl/1783110", "https://gamebanana.com/mods/388979", 542065715,
         "66c3625e475b38f8e2fda0a240855f9c", ModInstallKind.Manual,
-        "Uploader and compiler: YiannisG\n\nContributors credited on GameBanana:\nAlgo112233 â€” Ports\nAzureFEF â€” Textures\nBarakawa â€” Textures\nBooLean1 â€” Textures\nBrian_alien â€” Ports, animations, models, textures\ncamusrigan â€” Texture ideas\nDeathChaosV2 â€” Textures and ports\nEnkad â€” Textures\nExcadrill1201 â€” Textures\nGrandmasterMorgan â€” Models\nhissingfit â€” Textures\nIndiiea â€” Playtesting\nJamesB210 â€” Ports and models\nL498 â€” Textures\nlivipup â€” Textures\nltranc â€” Textures\nLuminousClarity â€” Models\nMaester42 â€” Textures\nManakete_Smoocher â€” Ports\nMathcat â€” Textures\nMeanProtagonist â€” Textures\nMerrill â€” Textures\nMoonling â€” Textures and models\nPrincess Blucy â€” Textures and models\nPuddles â€” Textures and models\nSoleth â€” Ports\nSucky Wucky â€” Playtesting\nThane98 â€” Paragon\nThatUnknownSkull â€” Textures\nthirteen â€” Textures\nTildeHat â€” Ports, models, textures, animations\nTrustyWusty â€” Playtesting and textures\nYiannisG â€” Textures, ports, compilation\n\nSee the linked GameBanana page for updates and any additional credits.",
+        "Uploader and compiler: YiannisG\n\nContributors credited on GameBanana:\nAlgo112233 - Ports\nAzureFEF - Textures\nBarakawa - Textures\nBooLean1 - Textures\nBrian_alien - Ports, animations, models, textures\ncamusrigan - Texture ideas\nDeathChaosV2 - Textures and ports\nEnkad - Textures\nExcadrill1201 - Textures\nGrandmasterMorgan - Models\nhissingfit - Textures\nIndiiea - Playtesting\nJamesB210 - Ports and models\nL498 - Textures\nlivipup - Textures\nltranc - Textures\nLuminousClarity - Models\nMaester42 - Textures\nManakete_Smoocher - Ports\nMathcat - Textures\nMeanProtagonist - Textures\nMerrill - Textures\nMoonling - Textures and models\nPrincess Blucy - Textures and models\nPuddles - Textures and models\nSoleth - Ports\nSucky Wucky - Playtesting\nThane98 - Paragon\nThatUnknownSkull - Textures\nthirteen - Textures\nTildeHat - Ports, models, textures, animations\nTrustyWusty - Playtesting and textures\nYiannisG - Textures, ports, compilation\n\nSee the linked GameBanana page for updates and any additional credits.",
         "542 MB RAR  |  manual extraction and game rebuild required; see the source page.");
     private static readonly ModDownload UnofficialGayFates = new(
         "Unofficial Gay Fates", "unofficial_gay_fates_v252.7z",
@@ -108,7 +108,7 @@ internal sealed class LauncherForm : Form
         "Fates UI Remastered", "fates_ui_remastered.zip",
         "https://gamebanana.com/dl/1469099", "https://gamebanana.com/mods/542115", 21301723,
         "ae8b2e4030cdcb7b476929623f243ab5", ModInstallKind.TexturePack,
-        "Creator: Korum\n\nCredit: L498 â€” Various UI Elements\n\nAdditional source asset credits named by the author: Aoryn and FEPortraits, with assets from Fates Icon Project and Fates HD Additions. See Asset References.txt in the download and the GameBanana page for full attribution.",
+        "Creator: Korum\n\nCredit: L498 - Various UI Elements\n\nAdditional source asset credits named by the author: Aoryn and FEPortraits, with assets from Fates Icon Project and Fates HD Additions. See Asset References.txt in the download and the GameBanana page for full attribution.",
         "21 MB ZIP  |  installs as a Zakuro texture pack for the detected title ID.");
 
     private static readonly (string Label, string Value)[] Layouts =
@@ -137,11 +137,11 @@ internal sealed class LauncherForm : Form
         new("Start", "start", "start", "Enter", "Start"), new("Select", "select", "select", "Backspace", "Select"),
         new("D-pad up", "up", "up", "ArrowUp", "DPadUp"), new("D-pad down", "down", "down", "ArrowDown", "DPadDown"),
         new("D-pad left", "left", "left", "ArrowLeft", "DPadLeft"), new("D-pad right", "right", "right", "ArrowRight", "DPadRight"),
-        new("Circle pad up", "circle_up", null, "KeyI", "Left stick â†‘", true), new("Circle pad down", "circle_down", null, "KeyK", "Left stick â†“", true),
-        new("Circle pad left", "circle_left", null, "KeyJ", "Left stick â†", true), new("Circle pad right", "circle_right", null, "KeyL", "Left stick â†’", true),
+        new("Circle pad up", "circle_up", null, "KeyI", "Left stick up", true), new("Circle pad down", "circle_down", null, "KeyK", "Left stick down", true),
+        new("Circle pad left", "circle_left", null, "KeyJ", "Left stick left", true), new("Circle pad right", "circle_right", null, "KeyL", "Left stick right", true),
         new("ZL", "zl", "zl", "Digit1", "LeftTrigger2"), new("ZR", "zr", "zr", "Digit2", "RightTrigger2"),
-        new("C-stick up", "c_up", null, "KeyT", "Right stick â†‘", true), new("C-stick down", "c_down", null, "KeyG", "Right stick â†“", true),
-        new("C-stick left", "c_left", null, "KeyF", "Right stick â†", true), new("C-stick right", "c_right", null, "KeyH", "Right stick â†’", true),
+        new("C-stick up", "c_up", null, "KeyT", "Right stick up", true), new("C-stick down", "c_down", null, "KeyG", "Right stick down", true),
+        new("C-stick left", "c_left", null, "KeyF", "Right stick left", true), new("C-stick right", "c_right", null, "KeyH", "Right stick right", true),
         new("Bottom-screen overlay", "overlay_key", "overlay_button", "F12", "RightThumb", false, true),
         new("Fast-forward (hold)", "fast_forward_key", "fast_forward_button", "Tab", "LeftThumb", false, true),
         new("Decrease fast-forward speed", "speed_down_key", "speed_down_button", "Digit9", "LeftTrigger2", false, true),
@@ -310,7 +310,7 @@ internal sealed class LauncherForm : Form
 
     private void ShowCredits(ModDownload mod)
     {
-        using var dialog = new Form { Text = $"Credits â€” {mod.Name}", StartPosition = FormStartPosition.CenterParent, Size = new Size(660, 620), MinimumSize = new Size(480, 360), BackColor = ParchmentLight, Font = Font };
+        using var dialog = new Form { Text = $"Credits - {mod.Name}", StartPosition = FormStartPosition.CenterParent, Size = new Size(660, 620), MinimumSize = new Size(480, 360), BackColor = ParchmentLight, Font = Font };
         var content = new TextBox { Dock = DockStyle.Fill, Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical, WordWrap = true, Text = mod.Credits, BackColor = ParchmentLight, ForeColor = Ink, BorderStyle = BorderStyle.None, Padding = new Padding(14), Font = new Font("Segoe UI", 10) };
         var link = new LinkLabel { Dock = DockStyle.Bottom, Height = 34, Text = "Open the GameBanana page for current credits and update notes", TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(12, 0, 0, 0) };
         link.LinkClicked += (_, _) => OpenWebPage(mod.PageUrl);
@@ -329,7 +329,7 @@ internal sealed class LauncherForm : Form
             {
                 if (File.Exists(archivePath)) File.Delete(archivePath);
                 _progress.Visible = true; _progress.Style = ProgressBarStyle.Marquee;
-                _status.Text = $"Downloading {mod.Name}â€¦";
+                _status.Text = $"Downloading {mod.Name}...";
                 using var response = await ModHttp.GetAsync(mod.DownloadUrl, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
                 await using (var source = await response.Content.ReadAsStreamAsync())
@@ -342,7 +342,7 @@ internal sealed class LauncherForm : Form
                         await destination.WriteAsync(buffer.AsMemory(0, read)); received += read;
                         var percent = (int)Math.Clamp(received * 100L / Math.Max(1, total), 0, 100);
                         _progress.Value = percent;
-                        _status.Text = $"Downloading {mod.Name}â€¦ {received / 1048576:N0} / {total / 1048576:N0} MB";
+                        _status.Text = $"Downloading {mod.Name}... {received / 1048576:N0} / {total / 1048576:N0} MB";
                     }
                 }
                 File.Move(archivePath + ".download", archivePath, overwrite: true);
@@ -505,7 +505,7 @@ internal sealed class LauncherForm : Form
         row.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
         var fieldLabel = FieldLabel(label);
         fieldLabel.Margin = Padding.Empty;
-        var browse = ActionButton("â€¦", false);
+        var browse = ActionButton("...", false);
         browse.Dock = DockStyle.Fill;
         browse.Margin = new Padding(2, 8, 0, 8);
         box.Dock = DockStyle.Fill;
@@ -605,7 +605,7 @@ internal sealed class LauncherForm : Form
         fieldLabel.AutoSize = false;
         grid.Controls.Add(fieldLabel, 0, row);
         box.Dock = DockStyle.Fill; box.Margin = new Padding(3, 8, 6, 8); StyleInput(box); grid.Controls.Add(box, 1, row);
-        var browse = ActionButton("â€¦", false); browse.Dock = DockStyle.Fill; browse.Margin = new Padding(0, 7, 0, 7);
+        var browse = ActionButton("...", false); browse.Dock = DockStyle.Fill; browse.Margin = new Padding(0, 7, 0, 7);
         browse.Click += (_, _) =>
         {
             if (folder)
@@ -810,7 +810,7 @@ internal sealed class LauncherForm : Form
         if (code.StartsWith("Numpad", StringComparison.Ordinal)) return $"Num {code[6..]}";
         return code switch
         {
-            "ArrowUp" => "â†‘", "ArrowDown" => "â†“", "ArrowLeft" => "â†", "ArrowRight" => "â†’",
+            "ArrowUp" => "up", "ArrowDown" => "down", "ArrowLeft" => "left", "ArrowRight" => "right",
             "ShiftLeft" => "Left Shift", "ShiftRight" => "Right Shift",
             "ControlLeft" => "Left Ctrl", "ControlRight" => "Right Ctrl",
             "AltLeft" => "Left Alt", "AltRight" => "Right Alt",
@@ -831,7 +831,7 @@ internal sealed class LauncherForm : Form
         _captureCell.ToolTipText = columnIndex == 1 ? "Press the key to assign" : "Press a button on an XInput-compatible controller";
         if (columnIndex == 1)
         {
-            _status.Text = $"Press the keyboard key for {binding.Label}â€¦";
+            _status.Text = $"Press the keyboard key for {binding.Label}...";
             return;
         }
 
@@ -839,8 +839,8 @@ internal sealed class LauncherForm : Form
         {
             _padConnected[i] = TryGetXInputState(i, out _lastPadStates[i]);
         }
-        _status.Text = $"Press a controller button for {binding.Label}â€¦";
-        if (!_padConnected.Any(connected => connected)) _status.Text = "No XInput controller detected yet. Connect an XInput-compatible controller, then press a buttonâ€¦";
+        _status.Text = $"Press a controller button for {binding.Label}...";
+        if (!_padConnected.Any(connected => connected)) _status.Text = "No XInput controller detected yet. Connect an XInput-compatible controller, then press a button...";
         _padCaptureTimer.Start();
     }
 
@@ -1002,7 +1002,7 @@ internal sealed class LauncherForm : Form
         SaveSettings();
         _building = true; _buildButton.Enabled = false; _launchButton.Enabled = false;
         _progress.Visible = true; _progress.Style = ProgressBarStyle.Marquee;
-        _status.Text = "Recompiling the game codeâ€¦ this first build may take several minutes.";
+        _status.Text = "Recompiling the game code... this first build may take several minutes.";
         try
         {
             var compiler = await EnsureCCompilerAsync();
@@ -1058,7 +1058,9 @@ internal sealed class LauncherForm : Form
         if (systemGcc is not null) return new CCompiler(systemGcc, Path.GetDirectoryName(systemGcc)!);
 
         var zigPath = Path.Combine(ZigRoot, $"zig-x86_64-windows-{ZigVersion}", "zig.exe");
-        return File.Exists(zigPath) ? new CCompiler($"\"{zigPath}\" cc", Path.GetDirectoryName(zigPath)!) : null;
+        // 3dsrecomp splits CC into an executable and leading arguments; quotes
+        // become part of the executable name in its parser, so leave this unquoted.
+        return File.Exists(zigPath) ? new CCompiler($"{zigPath} cc", Path.GetDirectoryName(zigPath)!) : null;
     }
 
     private async Task<CCompiler> EnsureCCompilerAsync()
@@ -1139,7 +1141,7 @@ internal sealed class LauncherForm : Form
             }
             else if (line.Contains("wrote", StringComparison.OrdinalIgnoreCase))
             {
-                _status.Text = "Generated C source  |  compiling native PC filesâ€¦";
+                _status.Text = "Generated C source  |  compiling native PC files...";
             }
         }));
     }
